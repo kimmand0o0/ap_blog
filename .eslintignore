@@ -1,0 +1,8 @@
+node_modules
+*.d.ts
+myDatabase
+out
+test-results
+__texts__
+*.test.ts
+*.test.tsx

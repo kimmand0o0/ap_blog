@@ -1,4 +1,5 @@
-import { UserRepository } from "../repositories/user-repository";
+import { UserRepository } from "@/repositories/user-repository";
+import { hashPassword } from "@/utils/hash-password";
 
 import { User } from "@prisma/client";
 
@@ -38,10 +39,12 @@ export class SignupUseCase implements ISignupUseCase {
       throw new Error("Username already exists");
     }
 
+    const hashedPassword = hashPassword(password);
+
     const newUser = await this.userRepository.createUser(
       email,
       username,
-      password
+      hashedPassword
     );
 
     return newUser;

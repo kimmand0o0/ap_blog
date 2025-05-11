@@ -3,17 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 import { UserRepository } from "@/repositories/user-repository";
-import { SignupUseCase } from "@/usecases/signup-usecase";
 
-import { SignupRequestDto, SignupResponseDto } from "@/app/api/dtos/signup.dto";
 import { TUserRole } from "@/slices/create-user-slice";
+import { AuthUseCase } from "@/usecases/auth-usecase";
 import { generateJWT } from "@/utils/jwt";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, username, password }: SignupRequestDto = await req.json();
+    const { email, password } = await req.json();
 
-    if (!email || !username || !password) {
+    if (!email || !password) {
       return NextResponse.json(
         { error: "충분한 정보를 전달받지 못했습니다." },
         { status: 400 }
@@ -21,22 +20,13 @@ export async function POST(req: NextRequest) {
     }
 
     const userRepository = new UserRepository(new PrismaClient());
-    const signupUseCase = new SignupUseCase(userRepository);
+    const authUseCase = new AuthUseCase(userRepository);
 
-    const userExists = await userRepository.userExists(email, username);
-
-    if (userExists) {
-      return NextResponse.json(
-        { error: "이미 존재하는 유저 입니다." },
-        { status: 400 }
-      );
-    }
-
-    const user = await signupUseCase.execute(email, username, password);
+    const user = await authUseCase.login(email, password);
 
     if (!user) {
       return NextResponse.json(
-        { error: "회원가입에 실패하였습니다." },
+        { error: "로그인에 실패하였습니다." },
         { status: 400 }
       );
     }
@@ -48,7 +38,7 @@ export async function POST(req: NextRequest) {
       role: user.role,
     });
 
-    const responseBody: SignupResponseDto = {
+    const responseBody = {
       email: user.email,
       username: user.username,
       role: user.role as TUserRole,

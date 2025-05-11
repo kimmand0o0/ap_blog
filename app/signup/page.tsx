@@ -24,6 +24,7 @@ export default function Signup() {
 
   const { duplicateInputs, getSignupVerification, setUser } = useStore();
   const values = useStore((state) => state.values);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
 
   const [isVerified, setIsVerified] = useState(false);
 
@@ -64,6 +65,11 @@ export default function Signup() {
   useEffect(() => {
     setIsVerified(getSignupVerification());
   }, [values]);
+
+  if (isLoggedIn) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <main className="w-screen h-screen p-48 flex items-center justify-center">

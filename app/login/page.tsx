@@ -21,6 +21,8 @@ import { Label } from "@/components/ui/label";
 export default function Signup() {
   const router = useRouter();
 
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
+
   const { setUser } = useStore();
 
   const [email, setEmail] = useState("");
@@ -51,6 +53,11 @@ export default function Signup() {
 
     router.push("/");
   };
+
+  if (isLoggedIn) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <main className="w-screen h-screen p-48 flex items-center justify-center">

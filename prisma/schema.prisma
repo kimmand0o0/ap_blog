@@ -13,6 +13,7 @@ model User {
   email     String   @unique
   password  String   // 비밀번호 해싱 전제
   username  String   @unique
+  role      String   @default("USER") 
   avatarUrl String?  // 프로필 이미지
   posts     Post[]   @relation("UserPosts")
   comments  Comment[]

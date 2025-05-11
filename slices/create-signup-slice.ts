@@ -193,8 +193,6 @@ export const createSignupSlice: StateCreator<
   getSignupVerification: () => {
     const { values } = get();
 
-    console.log("getSignupVerification", values);
-
     if (!values) return false;
 
     return values.every((input) => {

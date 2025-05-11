@@ -49,8 +49,6 @@ export default function Signup() {
       body: JSON.stringify({ email, username, password } as SignupRequestDto),
     });
 
-    console.log(response);
-
     if (response.status === 201) {
       const { user } = await response.json();
       const { email, username, role }: SignupResponseDto = user;

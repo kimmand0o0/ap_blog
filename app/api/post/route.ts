@@ -51,12 +51,13 @@ export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const page = url.searchParams.get("page") ?? "1";
+    const orderBy = url.searchParams.get("orderBy") ?? "createdAt";
 
     const prisma = new PrismaClient();
     const postRepository = new PostRepository(prisma);
     const postUseCase = new PostUseCase(postRepository);
 
-    const posts = await postUseCase.findAll(page);
+    const posts = await postUseCase.findAll(page, orderBy);
 
     return NextResponse.json(posts, { status: 200 });
   } catch (error: unknown) {

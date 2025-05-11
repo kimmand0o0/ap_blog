@@ -1,6 +1,7 @@
 import { Post, User } from "@prisma/client";
 
 import PostCard from "@/components/post-list/post-card";
+import PostOrder from "@/components/post-list/post-order";
 
 import {
   Pagination,
@@ -27,6 +28,7 @@ export default function PostList({ count, initialPosts, page }: PostListProps) {
 
   return (
     <>
+    <PostOrder />
       <div className="w-full flex flex-col gap-2">
         {initialPosts.map((post: Post & { author: User }) => (
           <PostCard key={post.id} post={post} />

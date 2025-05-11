@@ -2,7 +2,7 @@ import { PrismaClient, Post, User } from "@prisma/client";
 
 interface IPostRepository {
   count(): Promise<number>;
-  findAll(start: number, size: number): Promise<(Post & { author: User })[]>;
+  findAll(start: number, size: number, orderBy : "createdAt" | "updatedAt",): Promise<(Post & { author: User })[]>;
   findById(id: string): Promise<(Post & { author: User }) | null>;
   createPost(
     title: string,
@@ -47,7 +47,8 @@ export class PostRepository implements IPostRepository {
 
   async findAll(
     start: number,
-    size: number
+    size: number,
+    orderBy :string,
   ): Promise<(Post & { author: User })[]> {
     try {
       const posts = await this.prisma.post.findMany({
@@ -57,7 +58,7 @@ export class PostRepository implements IPostRepository {
         skip: start,
         take: size,
         orderBy: {
-          createdAt: "desc",
+          [orderBy]: "desc",
         },
       });
       return posts;

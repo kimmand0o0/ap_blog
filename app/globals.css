@@ -66,3 +66,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.btn {
+  @apply px-2 py-1 border rounded text-sm bg-white hover:bg-gray-100;
+}
+
+div[contenteditable="true"]:focus {
+  outline: none;
+}

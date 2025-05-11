@@ -28,7 +28,7 @@ model Post {
   author    User      @relation("UserPosts", fields: [authorId], references: [id])
   authorId  String
   comments  Comment[]
-  tags      Tag[]     @relation("PostTags")
+  tags      String? 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -45,11 +45,4 @@ model Comment {
   replies   Comment[] @relation("CommentToReplies")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-}
-
-model Tag {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  posts     Post[]   @relation("PostTags")
-  createdAt DateTime @default(now())
 }

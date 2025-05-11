@@ -7,10 +7,7 @@ import { PostRepository } from "@/repositories/post-repository";
 
 import { verifyJWT } from "@/utils/jwt";
 
-import {
-  DeletePostRequestDto,
-  PutPostRequestDto,
-} from "@/app/api/dtos/post.dto";
+import { PutPostRequestDto } from "@/app/api/dtos/post.dto";
 
 export async function PUT(req: NextRequest) {
   try {
@@ -57,9 +54,12 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function DELETE(req: NextRequest) {
+export async function DELETE(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id }: DeletePostRequestDto = await req.json();
+    const { id } = await context.params;
 
     const token = req.cookies.get("token")?.value;
     if (!token) {
@@ -98,10 +98,10 @@ export async function DELETE(req: NextRequest) {
 
 export async function GET(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = context.params;
+    const { id } = await context.params;
 
     const prisma = new PrismaClient();
     const postRepository = new PostRepository(prisma);

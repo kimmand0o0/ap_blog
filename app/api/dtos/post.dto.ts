@@ -10,7 +10,3 @@ export interface PutPostRequestDto {
   content: string;
   tags: string;
 }
-
-export interface DeletePostRequestDto {
-  id: string;
-}

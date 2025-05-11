@@ -34,7 +34,7 @@ export default function TipTapEditor({
   };
 
   return (
-    <div className="border rounded-md p-4 min-h-[500px]">
+    <div className="border rounded-md p-4 h-full">
       <input
         type="text"
         className="w-full border-b-[1px] p-2 mb-2 text-2xl focus:outline-none"
@@ -44,15 +44,20 @@ export default function TipTapEditor({
         onChange={(e) => setTitle(e.target.value)}
       />
       <MenuBar editor={editor} />
-      <EditorContent
-        editor={editor}
-        onBlur={() => {
-          if (editor) {
-            setContent(editor.getHTML());
-          }
-        }}
-        className="prose prose-sm sm:prose lg:prose-lg w-full px-3"
-      />
+      <div
+        className="size-full min-h-[300px]"
+        onClick={() => editor?.commands.focus("end")}
+      >
+        <EditorContent
+          editor={editor}
+          onBlur={() => {
+            if (editor) {
+              setContent(editor.getHTML());
+            }
+          }}
+          className="prose prose-sm sm:prose lg:prose-lg w-full px-3"
+        />
+      </div>
     </div>
   );
 }

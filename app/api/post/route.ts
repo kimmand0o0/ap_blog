@@ -47,13 +47,16 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const url = new URL(req.url);
+    const page = url.searchParams.get("page") ?? "1";
+
     const prisma = new PrismaClient();
     const postRepository = new PostRepository(prisma);
     const postUseCase = new PostUseCase(postRepository);
 
-    const posts = await postUseCase.findAll();
+    const posts = await postUseCase.findAll(page);
 
     return NextResponse.json(posts, { status: 200 });
   } catch (error: unknown) {

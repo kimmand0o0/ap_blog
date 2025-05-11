@@ -1,4 +1,4 @@
-export function formatDate(isoString: string): string {
+export function formatDate(isoString: string | Date): string {
   const date = new Date(isoString);
 
   const pad = (n: number) => String(n).padStart(2, "0");

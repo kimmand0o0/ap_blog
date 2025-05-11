@@ -18,7 +18,10 @@ export interface IPostUseCase {
   ): Promise<Post | null>;
   deletePost(id: string, authorId: string): Promise<void>;
   findById(id: string): Promise<Post | null>;
-  findAll(): Promise<Post[] | null>;
+  findAll(
+    page: string,
+    size?: number
+  ): Promise<{ count: number; posts: Post[] } | null>;
 }
 
 export class PostUseCase implements IPostUseCase {
@@ -71,7 +74,20 @@ export class PostUseCase implements IPostUseCase {
     return this.postRepository.findById(id);
   }
 
-  async findAll(): Promise<Post[] | null> {
-    return this.postRepository.findAll();
+  async findAll(
+    page: string,
+    size = 5
+  ): Promise<{ count: number; posts: Post[] } | null> {
+    const numPage = Number(page);
+
+    const start = (numPage - 1) * size;
+
+    const count = await this.postRepository.count();
+    const posts = await this.postRepository.findAll(start, size);
+
+    return {
+      count,
+      posts,
+    };
   }
 }

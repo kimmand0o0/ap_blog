@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 interface PostFormProps {
+  onSubmit: (title: string, content: string, tags: string[]) => void;
   initialTitle?: string;
   initialContent?: string;
   initialTags?: string[];
 }
 
 export default function PostForm({
+  onSubmit,
   initialTitle = "",
   initialContent = "",
   initialTags = [],
@@ -43,7 +45,12 @@ export default function PostForm({
 
   return (
     <div className="w-full flex flex-col gap-4 lg:p-20 md:p-10 sm:p-4 p-2">
-      <TipTapEditor title={title} setTitle={setTitle} setContent={setContent} />
+      <TipTapEditor
+        title={title}
+        setTitle={setTitle}
+        content={content}
+        setContent={setContent}
+      />
       <Input
         placeholder="태그를 입력 후 엔터를 눌러주세요."
         onKeyDown={handleTagInput}
@@ -59,7 +66,11 @@ export default function PostForm({
         <Button variant="outline" className="w-full">
           취소
         </Button>
-        <Button className="w-full" disabled={isActive}>
+        <Button
+          className="w-full"
+          disabled={isActive}
+          onClick={() => onSubmit(title, content, tags)}
+        >
           완료
         </Button>
       </div>

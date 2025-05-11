@@ -11,17 +11,19 @@ import { MenuBar } from "@/components/post-form/editor-menu";
 interface TipTapEditorProps {
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
+  content: string;
   setContent: Dispatch<SetStateAction<string>>;
 }
 
 export default function TipTapEditor({
   title,
   setTitle,
+  content,
   setContent,
 }: TipTapEditorProps) {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    content: "",
+    content: content,
   });
 
   const handleTitleOut = (e: React.KeyboardEvent<HTMLInputElement>) => {

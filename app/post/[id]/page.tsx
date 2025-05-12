@@ -2,6 +2,7 @@ import { formatDate } from "@/utils/format-date";
 
 import Comments from "@/app/post/[id]/_components/comments";
 import PostButtons from "@/app/post/[id]/_components/post-buttons";
+import Like from "@/app/post/[id]/_components/like";
 
 const url = process.env.URL;
 
@@ -39,6 +40,7 @@ export default async function PostDetail({ params }: PostDetailProps) {
         className="prose p-2 min-h-[300px]"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+      <Like postId={id} />
       <Comments postId={id} />
     </main>
   );

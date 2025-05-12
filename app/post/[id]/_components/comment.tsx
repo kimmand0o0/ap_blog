@@ -96,7 +96,7 @@ export default function Comment({
           <div className="flex-1 text-zinc-500 text-sm">
             {formatDate(initialComment.createdAt)}
           </div>
-          <Button
+          {/* <Button
             variant="outline"
             onClick={() => {
               if (!isLoggedIn) {
@@ -107,15 +107,15 @@ export default function Comment({
             }}
           >
             댓글
-          </Button>
+          </Button> */}
         </div>
       )}
-      {isOpen && (
+      {/* {isOpen && (
         <div className="w-full flex felx-row gap-2 items-center">
           <Input />
           <Button onClick={handleCreateReComment}>작성</Button>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

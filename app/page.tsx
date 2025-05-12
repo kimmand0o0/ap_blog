@@ -36,7 +36,7 @@ export default async function Home({
           <Button>새글쓰기</Button>
         </Link>
       </div>
-      <PostList count={count} initialPosts={posts} page={Number(page)} />
+      <PostList count={count} initialPosts={posts ?? []} page={Number(page)} />
     </main>
   );
 }

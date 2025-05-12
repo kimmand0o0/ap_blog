@@ -39,7 +39,7 @@ export default async function PostDetail({ params }: PostDetailProps) {
         className="prose p-2 min-h-[300px]"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
-      <Comments />
+      <Comments postId={id} />
     </div>
   );
 }

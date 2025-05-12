@@ -2,16 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { PrismaClient } from "@prisma/client";
 
-import { PostUseCase } from "@/usecases/post-usecase";
-import { PostRepository } from "@/repositories/post-repository";
-
 import { verifyJWT } from "@/utils/jwt";
+import { CommentRepository } from "@/repositories";
+import { CommentUseCase } from "@/usecases/comment-usecase";
 
-import { PutPostRequestDto } from "@/app/api/dtos/post.dto";
-
-export async function PUT(req: NextRequest) {
+export async function PUT(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id, title, tags, content }: PutPostRequestDto = await req.json();
+    const { id } = await context.params;
+    const { content } = await req.json();
 
     const token = req.cookies.get("token")?.value;
     if (!token) {
@@ -29,20 +30,18 @@ export async function PUT(req: NextRequest) {
     }>(token);
 
     const prisma = new PrismaClient();
-    const postRepository = new PostRepository(prisma);
-    const postUseCase = new PostUseCase(postRepository);
+    const commentRepository = new CommentRepository(prisma);
+    const commentUseCase = new CommentUseCase(commentRepository);
 
-    const post = await postUseCase.updatePost(
+    const comment = await commentUseCase.updateComment(
       id,
-      title,
       authorId,
-      tags,
       content,
       role
     );
 
     return NextResponse.json(
-      { message: "게시글이 성공적으로 수정되었습니다.", post },
+      { message: "댓글이 성공적으로 수정되었습니다.", comment },
       { status: 200 }
     );
   } catch (error: unknown) {
@@ -78,39 +77,15 @@ export async function DELETE(
     }>(token);
 
     const prisma = new PrismaClient();
-    const postRepository = new PostRepository(prisma);
-    const postUseCase = new PostUseCase(postRepository);
+    const commentRepository = new CommentRepository(prisma);
+    const commentUseCase = new CommentUseCase(commentRepository);
 
-    await postUseCase.deletePost(id, authorId, role);
+    await commentUseCase.deleteComment(id, authorId, role);
 
     return NextResponse.json(
       { message: "게시글이 성공적으로 삭제되었습니다." },
       { status: 200 }
     );
-  } catch (error: unknown) {
-    const errorMessage =
-      error instanceof Error
-        ? error.message
-        : "알 수 없는 오류가 발생했습니다.";
-
-    return NextResponse.json({ error: errorMessage }, { status: 400 });
-  }
-}
-
-export async function GET(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await context.params;
-
-    const prisma = new PrismaClient();
-    const postRepository = new PostRepository(prisma);
-    const postUseCase = new PostUseCase(postRepository);
-
-    const post = await postUseCase.findById(id);
-
-    return NextResponse.json(post, { status: 200 });
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error

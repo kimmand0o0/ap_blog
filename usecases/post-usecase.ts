@@ -14,13 +14,18 @@ export interface IPostUseCase {
     title: string,
     tags: string,
     authorId: string,
-    content: string
+    content: string,
+    role?: "USER" | "ADMIN"
   ): Promise<Post | null>;
-  deletePost(id: string, authorId: string): Promise<void>;
+  deletePost(
+    id: string,
+    authorId: string,
+    role?: "USER" | "ADMIN"
+  ): Promise<void>;
   findById(id: string): Promise<Post | null>;
   findAll(
     page: string,
-    orderBy : "createdAt" | "updatedAt",
+    orderBy: "createdAt" | "updatedAt",
     size?: number
   ): Promise<{ count: number; posts: Post[] } | null>;
 }
@@ -42,7 +47,8 @@ export class PostUseCase implements IPostUseCase {
     title: string,
     authorId: string,
     tags: string,
-    content: string
+    content: string,
+    role = "USER"
   ): Promise<Post | null> {
     const post = await this.postRepository.findById(id);
 
@@ -50,21 +56,21 @@ export class PostUseCase implements IPostUseCase {
       throw new Error("게시글을 찾을 수 없습니다.");
     }
 
-    if (post.authorId !== authorId) {
+    if (role === "USER" && post.authorId !== authorId) {
       throw new Error("게시글 작성자만 수정할 수 있습니다.");
     }
 
     return this.postRepository.updatePost(id, title, tags, content);
   }
 
-  async deletePost(id: string, authorId: string): Promise<void> {
+  async deletePost(id: string, authorId: string, role = "USER"): Promise<void> {
     const post = await this.postRepository.findById(id);
 
     if (!post) {
       throw new Error("게시글을 찾을 수 없습니다.");
     }
 
-    if (post.authorId !== authorId) {
+    if (role === "USER" && post.authorId !== authorId) {
       throw new Error("게시글 작성자만 수정할 수 있습니다.");
     }
 
@@ -77,7 +83,7 @@ export class PostUseCase implements IPostUseCase {
 
   async findAll(
     page: string,
-    orderBy : string,
+    orderBy: string,
     size = 5
   ): Promise<{ count: number; posts: Post[] } | null> {
     const numPage = Number(page);

@@ -28,7 +28,7 @@ export default function PostList({ count, initialPosts, page }: PostListProps) {
 
   return (
     <>
-    <PostOrder />
+      <PostOrder />
       <div className="w-full flex flex-col gap-2">
         {initialPosts.map((post: Post & { author: User }) => (
           <PostCard key={post.id} post={post} />

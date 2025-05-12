@@ -26,6 +26,7 @@ export interface IPostUseCase {
   findAll(
     page: string,
     orderBy: "createdAt" | "updatedAt",
+    search: string,
     size?: number
   ): Promise<{ count: number; posts: Post[] } | null>;
 }
@@ -84,14 +85,20 @@ export class PostUseCase implements IPostUseCase {
   async findAll(
     page: string,
     orderBy: string,
+    search: string,
     size = 5
   ): Promise<{ count: number; posts: Post[] } | null> {
     const numPage = Number(page);
 
     const start = (numPage - 1) * size;
 
-    const count = await this.postRepository.count();
-    const posts = await this.postRepository.findAll(start, size, orderBy);
+    const count = await this.postRepository.count(search);
+    const posts = await this.postRepository.findAll(
+      start,
+      size,
+      orderBy,
+      search
+    );
 
     return {
       count,

@@ -1,11 +1,12 @@
 import { PrismaClient, Post, User } from "@prisma/client";
 
 interface IPostRepository {
-  count(): Promise<number>;
+  count(search: string): Promise<number>;
   findAll(
     start: number,
     size: number,
-    orderBy: "createdAt" | "updatedAt"
+    orderBy: "createdAt" | "updatedAt",
+    search: string
   ): Promise<(Post & { author: User })[]>;
   findById(id: string): Promise<(Post & { author: User }) | null>;
   createPost(
@@ -40,9 +41,16 @@ interface IPostRepository {
 export class PostRepository implements IPostRepository {
   constructor(private prisma: PrismaClient) {}
 
-  async count(): Promise<number> {
+  async count(search: string): Promise<number> {
     try {
-      const count = await this.prisma.post.count();
+      const count = await this.prisma.post.count({
+        where: {
+          title: {
+            contains: `%${search}%`,
+            mode: "insensitive",
+          },
+        },
+      });
       return count;
     } finally {
       await this.prisma.$disconnect();
@@ -52,10 +60,17 @@ export class PostRepository implements IPostRepository {
   async findAll(
     start: number,
     size: number,
-    orderBy: string
+    orderBy: string,
+    search: string
   ): Promise<(Post & { author: User })[]> {
     try {
       const posts = await this.prisma.post.findMany({
+        where: {
+          title: {
+            contains: `%${search}%`,
+            mode: "insensitive",
+          },
+        },
         include: {
           author: true,
         },

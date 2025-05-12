@@ -50,6 +50,7 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
+    const search = url.searchParams.get("search") ?? "";
     const page = url.searchParams.get("page") ?? "1";
     const orderBy = url.searchParams.get("orderBy") ?? "createdAt";
 
@@ -57,7 +58,7 @@ export async function GET(req: NextRequest) {
     const postRepository = new PostRepository(prisma);
     const postUseCase = new PostUseCase(postRepository);
 
-    const posts = await postUseCase.findAll(page, orderBy);
+    const posts = await postUseCase.findAll(page, orderBy, search);
 
     return NextResponse.json(posts, { status: 200 });
   } catch (error: unknown) {

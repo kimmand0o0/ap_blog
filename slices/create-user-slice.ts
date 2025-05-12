@@ -30,14 +30,14 @@ export const createUserSlice: StateCreator<
   setUser: (email: string, username: string, role: TUserRole) =>
     set({ email, username, role, isLoggedIn: true }),
 
-  logOut: async () =>{
+  logOut: async () => {
     await fetch("/api/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    
-    set({ email: "", username: "", role: "USER", isLoggedIn: false })
+
+    set({ email: "", username: "", role: "USER", isLoggedIn: false });
   },
 });

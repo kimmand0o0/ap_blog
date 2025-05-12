@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
+    console.log("app/api/post/route.ts");
     const url = new URL(req.url);
     const search = url.searchParams.get("search") ?? "";
     const page = url.searchParams.get("page") ?? "1";

@@ -27,6 +27,8 @@ export default async function Home({
 
   const data = await response.json();
 
+  console.log(data);
+
   const { count, posts } = data;
 
   return (

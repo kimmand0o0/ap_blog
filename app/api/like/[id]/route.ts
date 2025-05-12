@@ -11,7 +11,6 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    console.log("here");
     const { id } = await context.params;
 
     const token = req.cookies.get("token")?.value;

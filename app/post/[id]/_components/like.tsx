@@ -115,7 +115,6 @@ export default function Like({ postId, author }: LikeProps) {
       <button
         disabled={author.username === username}
         onClick={() => {
-          console.log("here");
           if (!isLiked) {
             return handleCreateLike();
           } else {

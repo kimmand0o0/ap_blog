@@ -28,7 +28,10 @@ export default function Like({ postId, author }: LikeProps) {
     });
 
     if (!response.ok) {
-      return alert("조회에 실패했습니다. 잠시 후 다시 시도해주세요!");
+      if (typeof window !== "undefined") {
+        alert("조회에 실패했습니다. 잠시 후 다시 시도해주세요!");
+      }
+      return;
     }
 
     const like = await response.json();
@@ -42,7 +45,9 @@ export default function Like({ postId, author }: LikeProps) {
 
   const handleCreateLike = () => {
     if (!isLoggedIn) {
-      alert("로그인이 필요한 서비스 입니다.");
+      if (typeof window !== "undefined") {
+        alert("로그인이 필요한 서비스 입니다.");
+      }
       return;
     }
 
@@ -55,7 +60,10 @@ export default function Like({ postId, author }: LikeProps) {
       });
 
       if (!response.ok) {
-        return alert("좋아요에 실패했습니다. 잠시 후 다시 시도해주세요!");
+        if (typeof window !== "undefined") {
+          alert("좋아요에 실패했습니다. 잠시 후 다시 시도해주세요!");
+        }
+        return;
       }
 
       const data = await response.json();
@@ -69,7 +77,9 @@ export default function Like({ postId, author }: LikeProps) {
 
   const handleDeleteLike = () => {
     if (!isLoggedIn) {
-      alert("로그인이 필요한 서비스 입니다.");
+      if (typeof window !== "undefined") {
+        alert("로그인이 필요한 서비스 입니다.");
+      }
       return;
     }
 
@@ -84,7 +94,10 @@ export default function Like({ postId, author }: LikeProps) {
       });
 
       if (!response.ok) {
-        return alert("좋아요 해제에 했습니다. 잠시 후 다시 시도해주세요!");
+        if (typeof window !== "undefined") {
+          alert("좋아요에 실패했습니다. 잠시 후 다시 시도해주세요!");
+        }
+        return;
       }
 
       setIsLiked(false);

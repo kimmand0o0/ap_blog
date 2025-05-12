@@ -56,7 +56,9 @@ export default function Signup() {
 
       setUser(email, username, role);
 
-      alert("회원가입이 완료되었습니다.");
+      if (typeof window !== "undefined") {
+        alert("회원가입이 완료되었습니다.");
+      }
 
       router.push("/");
     }

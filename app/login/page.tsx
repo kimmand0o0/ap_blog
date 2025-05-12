@@ -30,7 +30,9 @@ export default function Signup() {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      alert("이메일과 비밀번호를 입력해주세요.");
+      if (typeof window !== "undefined") {
+        alert("이메일과 비밀번호를 입력해주세요.");
+      }
       return;
     }
 
@@ -43,13 +45,15 @@ export default function Signup() {
     });
 
     if (!response.ok) {
-      alert("로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.");
+      if (typeof window !== "undefined") {
+        alert("로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.");
+      }
+
       return;
     }
     const { user }: { user: LoginResponseDto } = await response.json();
 
     setUser(user.email, user.username, user.role);
-    alert("로그인에 성공했습니다.");
 
     router.push("/");
   };

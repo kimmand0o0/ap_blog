@@ -33,7 +33,10 @@ export default function PostButtons({ id, authorName }: PostButtonsProps) {
     });
 
     if (!response.ok) {
-      return alert("삭제에 실패했습니다. 잠시 후 다시 시도해주세요!");
+      if (typeof window !== "undefined") {
+        alert("삭제에 실패했습니다. 잠시 후 다시 시도해주세요!");
+      }
+      return;
     }
 
     router.push("/");

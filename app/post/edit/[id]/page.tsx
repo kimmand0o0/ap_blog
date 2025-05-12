@@ -41,20 +41,19 @@ export default function NewPost() {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      alert(errorData.error);
       return;
     }
 
     const data = await response.json();
-    alert(data.message);
 
     router.push(`/post/${data.post.id}`);
   };
 
   useEffect(() => {
     if (!isLoggedIn) {
-      alert("로그인이 필요한 서비스 입니다.");
+      if (typeof window !== "undefined") {
+        alert("로그인이 필요한 서비스 입니다.");
+      }
       router.push("/login");
     }
 
@@ -66,8 +65,6 @@ export default function NewPost() {
         },
       });
       if (!response.ok) {
-        const errorData = await response.json();
-        alert(errorData.error);
         return;
       }
       const data = await response.json();

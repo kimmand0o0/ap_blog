@@ -37,7 +37,9 @@ export default function Comment({
     }
 
     if (!isLoggedIn) {
-      alert("로그인이 필요한 서비스 입니다.");
+      if (typeof window !== "undefined") {
+        alert("로그인이 필요한 서비스 입니다.");
+      }
       return;
     }
 

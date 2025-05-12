@@ -5,7 +5,7 @@ Next.js, TailwindCSS, Supabase, Prisma, Vercel을 기반으로 구현한 블로�
 
 ## 🚀 데모
 
-[👉 배포된 사이트 보기]https://ap-blog-phi.vercel.app/)
+[👉 배포된 사이트 보기](https://ap-blog-phi.vercel.app/)
 
 ![ap-blog](https://github.com/user-attachments/assets/2c487741-1b10-4644-b841-874e3d44b487)
 

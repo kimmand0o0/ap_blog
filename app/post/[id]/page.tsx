@@ -26,7 +26,7 @@ export default async function PostDetail({ params }: PostDetailProps) {
   const post = await response.json();
 
   return (
-    <div className="flex flex-col p-4 gap-4">
+    <main className="flex flex-col p-4 gap-4">
       <PostButtons id={id} authorName={post.author.username} />
       <div className="p-1 text-3xl">{post.title}</div>
       <div className="border-b-[1px] flex justify-between px-3">
@@ -40,6 +40,6 @@ export default async function PostDetail({ params }: PostDetailProps) {
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
       <Comments postId={id} />
-    </div>
+    </main>
   );
 }

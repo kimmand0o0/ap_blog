@@ -72,7 +72,7 @@ export default function Signup() {
   }
 
   return (
-    <main className="w-screen h-screen p-48 flex items-center justify-center">
+    <div className="w-full h-full p-48 flex items-center justify-center">
       <Card className="min-w-[350px]">
         <CardHeader>
           <CardTitle className="text-xl">회원 가입</CardTitle>
@@ -116,6 +116,6 @@ export default function Signup() {
           </Button>
         </CardFooter>
       </Card>
-    </main>
+    </div>
   );
 }

@@ -111,7 +111,7 @@ export default function Like({ postId, author }: LikeProps) {
   }, []);
 
   return (
-    <div className="w-full px-3 flex justify-end">
+    <div className="px-3 flex justify-end">
       <button
         disabled={author.username === username}
         onClick={() => {

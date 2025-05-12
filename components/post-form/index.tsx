@@ -57,7 +57,13 @@ export default function PostForm({
       />
       <div className="flex flex-row gap-2">
         {tags.map((tag, index) => (
-          <Badge key={`${index}-${tag}`} variant="outline">
+          <Badge
+            key={`${index}-${tag}`}
+            variant="outline"
+            onClick={() => {
+              setTags((prev) => prev.filter((prevTag) => prevTag !== tag));
+            }}
+          >
             {tag}
           </Badge>
         ))}

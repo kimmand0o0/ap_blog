@@ -1,16 +1,19 @@
 "use client";
 
 import useStore from "@/hooks/use-store";
-import { Like as TLike } from "@prisma/client";
+import { Like as TLike, User } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 interface LikeProps {
   postId: string;
+  author: User;
 }
 
-export default function Like({ postId }: LikeProps) {
+export default function Like({ postId, author }: LikeProps) {
   const isLoggedIn = useStore((state) => state.isLoggedIn);
+  const username = useStore((state) => state.username);
+
   const [isLiked, setIsLiked] = useState(false);
   const [like, setLike] = useState<TLike | null>(null);
 
@@ -97,6 +100,7 @@ export default function Like({ postId }: LikeProps) {
   return (
     <div className="w-full px-3 flex justify-end">
       <button
+        disabled={author.username === username}
         onClick={() => {
           console.log("here");
           if (!isLiked) {

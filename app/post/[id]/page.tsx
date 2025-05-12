@@ -40,7 +40,7 @@ export default async function PostDetail({ params }: PostDetailProps) {
         className="prose p-2 min-h-[300px]"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
-      <Like postId={id} />
+      <Like postId={id} author={post.author} />
       <Comments postId={id} />
     </main>
   );

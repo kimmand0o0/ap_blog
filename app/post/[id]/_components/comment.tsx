@@ -27,9 +27,9 @@ export default function Comment({
 
   const isAuthor = username === initialComment.author.username;
 
-  const handleCreateReComment = async () => {
-    setIsOpen(false);
-  };
+  // const handleCreateReComment = async () => {
+  //   setIsOpen(false);
+  // };
 
   const handleUpdateComment = async () => {
     if (!isEdit) {

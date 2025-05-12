@@ -18,12 +18,16 @@ export default async function Home({
   const orderBy = (await searchParams).orderBy ?? "createdAt";
   const search = (await searchParams).search ?? "";
 
+  console.table({ url, orderBy, search });
+
   const response = await fetch(
     `${url}/api/post?page=${page}&orderBy=${orderBy}&search=${search}`,
     {
       method: "GET",
     }
   );
+
+  console.log("response ===> \n", response);
 
   const data = await response.json();
 

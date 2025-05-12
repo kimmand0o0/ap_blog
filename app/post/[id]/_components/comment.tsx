@@ -21,7 +21,6 @@ export default function Comment({
   const isLoggedIn = useStore((state) => state.isLoggedIn);
   const username = useStore((state) => state.username);
 
-  const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [comment, setComment] = useState(initialComment.content);
 
@@ -91,31 +90,11 @@ export default function Comment({
         <Input value={comment} onChange={(e) => setComment(e.target.value)} />
       )}
       {!isEdit && <div className="flex-1 w-full">{comment}</div>}
-      {!isOpen && (
-        <div className="w-full flex flex-row justify-between items-end">
-          <div className="flex-1 text-zinc-500 text-sm">
-            {formatDate(initialComment.createdAt)}
-          </div>
-          {/* <Button
-            variant="outline"
-            onClick={() => {
-              if (!isLoggedIn) {
-                alert("로그인이 필요한 서비스입니다.");
-                return;
-              }
-              setIsOpen(true);
-            }}
-          >
-            댓글
-          </Button> */}
+      <div className="w-full flex flex-row justify-between items-end">
+        <div className="flex-1 text-zinc-500 text-sm">
+          {formatDate(initialComment.createdAt)}
         </div>
-      )}
-      {/* {isOpen && (
-        <div className="w-full flex felx-row gap-2 items-center">
-          <Input />
-          <Button onClick={handleCreateReComment}>작성</Button>
-        </div>
-      )} */}
+      </div>
     </div>
   );
 }
